@@ -1,0 +1,27 @@
+{
+  "name": "planharvest-heroku",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natekchua/PlanHarvest-heroku.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natekchua/PlanHarvest-heroku/issues"
+  },
+  "homepage": "https://github.com/natekchua/PlanHarvest-heroku#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "start": "^5.1.0"
+  },
+  "engines": {
+    "node" :">10"
+  }
+}
