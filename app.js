@@ -7,9 +7,19 @@ const farmRouter = express.Router();
 
 const connector = require('./local.js');
 
-const buildTest = require('./buildTest.js');
+const fcnsDB = require('./fcnsDB.js');
 
-buildTest.newFarm();
+// test
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+fcnsDB.newFarm();
 
 connector.initDB();
 
@@ -21,27 +31,22 @@ const pool = connector.getPool();
 });
 */
 
+/*
 farmRouter.route('/farms')
   .get((req, res) => {
-    const response = { hello: 'api test' };
-    res.json(response);
+    // const response = { hello: 'api test' };
+    const response = fcnsDB.getFarms();
+    // res.json(response);
   });
 app.use('/api', farmRouter);
+*/
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
 
-app.get('/', (req, res) => {
-  res.send('Welcome to planHarvest api');
-  pool.query('select now();', [], (err, result) => {
-    // done();
-    if (err) {
-      console.error(`query error:${err.message}`);
-    } else {
-      res.body = `Query success, data is: ${result.rows[0].now}`;
-      // console.log(`Query success, data is: ${result.rows[0].now}`);
-    }
-  });
+app.get('/', (request, response) => {
+  response.json({ info: 'Node.js, Express, and Postgres API' })
 });
 
+app.get('/farms', fcnsDB.getFarms);

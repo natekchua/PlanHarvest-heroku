@@ -3,7 +3,7 @@ const connector = require('./local.js');
 const pool = connector.getPool();
 
 function createTables() {
-  pool.query("CREATE TABLE farm(FarmID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
+  pool.query("CREATE TABLE FARM(FarmID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
     console.log(err, res);
   });
 
@@ -40,14 +40,13 @@ function newFarm(request) {
     }
   });
 }
-
-const getUsers = (request, response) => {
-  pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+const getFarms = (request, response) => {
+  pool.query('SELECT * FROM FARM ORDER BY FarmID ASC', (error, results) => {
     if (error) {
       throw error;
     }
     response.status(200).json(results.rows);
-  })
+  });
 }
 
 //
@@ -92,4 +91,4 @@ console.log(err.stack)
   console.log('pool has drained')
 */
 
-module.exports = { newFarm, createTables };
+module.exports = { newFarm, getFarms, createTables };
