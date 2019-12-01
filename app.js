@@ -21,6 +21,9 @@ app.use(
 
 fcnsDB.newFarm();
 
+// messy, but just run this once to create the farms table
+fcnsDB.createTables();
+
 connector.initDB();
 
 // should let or var be used instead for pool?
@@ -50,3 +53,5 @@ app.get('/', (request, response) => {
 });
 
 app.get('/farms', fcnsDB.getFarms);
+app.get('/initfarms', fcnsDB.initFarms);
+
