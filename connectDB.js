@@ -1,7 +1,10 @@
 // connect via pool or client
 const { Pool } = require('pg');
 
-pg.defaults.ssl = true
+const pg = require(‘pg’);
+
+pg.defaults.ssl = true;
+
 const pool = new Pool({
   user: process.env.DB_user,
   password: process.env.DB_password,
