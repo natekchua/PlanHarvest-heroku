@@ -1,14 +1,15 @@
 // connect via pool or client
 const { Pool } = require('pg');
 
+pg.defaults.ssl = true
 const pool = new Pool({
   user: process.env.DB_user,
   password: process.env.DB_password,
   host: process.env.DB_host,
   database: process.env.DB,
   port: process.env.DB_port,
-  // ssl: true,
-  ssl: false,
+  ssl: true,
+  // ssl: false,
 });
 
 function initDB() {
