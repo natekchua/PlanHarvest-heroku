@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 5432;
 
 // const connector = require('./local.js');
-const connector = require('./connectDB.js');
+// const connector = require('./connectDB.js');
 
 const fcnsDB = require('./fcnsDB.js');
 
@@ -24,10 +24,10 @@ fcnsDB.newFarm();
 // messy, but just run this once to create the farms table
 fcnsDB.createTables();
 
-connector.initDB();
+// connector.initDB();
 
 // should let or var be used instead for pool?
-const pool = connector.getPool();
+// const pool = connector.getPool();
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);

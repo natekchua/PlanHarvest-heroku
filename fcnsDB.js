@@ -1,5 +1,6 @@
 // const connector = require('./local.js');
 const connector = require('./connectDB.js');
+connector.initDB();
 
 const pool = connector.getPool();
 
