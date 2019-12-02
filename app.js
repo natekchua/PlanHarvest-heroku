@@ -2,7 +2,7 @@
 const express = require('express');
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5432;
 
 // const connector = require('./local.js');
 const connector = require('./connectDB.js');
