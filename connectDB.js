@@ -7,8 +7,8 @@ const pool = new Pool({
   host: process.env.DB_host,
   database: process.env.DB,
   port: process.env.DB_port,
-  // ssl: true,
-  ssl: false,
+  ssl: true,
+  // ssl: false,
 });
 
 function initDB() {
