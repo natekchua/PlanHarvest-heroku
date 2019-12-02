@@ -34,9 +34,10 @@ app.listen(port, () => {
 });
 
 app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' })
+  response.json({ info: 'Node.js, Express, and Postgres API' });
 });
 
+app.get('/test', fcnsDB.test);
 app.get('/farms', fcnsDB.getFarms);
 app.get('/initfarms', fcnsDB.initFarms);
 app.get('/farms/:id', fcnsDB.getFarmByID);

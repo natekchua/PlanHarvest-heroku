@@ -3,6 +3,17 @@ const connector = require('./connectDB.js');
 
 const pool = connector.getPool();
 
+// test fcn now
+const test = (request, response) => {
+  pool.query('SELECT NOW()', (error, results) => {
+    if (error) {
+      throw error;
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+
 function createTables() {
   pool.query("CREATE TABLE FARM(FarmID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
     console.log(err, res);
@@ -177,4 +188,4 @@ console.log(err.stack)
   console.log('pool has drained')
 */
 
-module.exports = { newFarm, getFarms, getFarmByID, addFarm, editFarm, deleteFarm, createTables, initFarms };
+module.exports = { test, newFarm, getFarms, getFarmByID, addFarm, editFarm, deleteFarm, createTables, initFarms };
