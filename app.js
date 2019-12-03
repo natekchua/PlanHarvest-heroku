@@ -2,7 +2,8 @@
 const express = require('express');
 
 const app = express();
-const port = process.env.PORT || 5432;
+
+const port = process.env.PORT || 8070;
 
 // const connector = require('./local.js');
 // const connector = require('./connectDB.js');
@@ -44,3 +45,5 @@ app.get('/farms/:id', fcnsDB.getFarmByID);
 app.post('/farms', fcnsDB.addFarm);
 // app.put('/farms/:id', fcnsDB.editFarm);
 // app.delete('/farms/:id', fcnsDB.deleteFarm);
+
+module.exports = app;
