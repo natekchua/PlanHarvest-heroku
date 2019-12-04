@@ -262,6 +262,18 @@ const addBin = (req, res) => {
   });
 };
 
+const addBarley = (req, res) => {
+  const { FieldID, FarmID, Location, FieldSize } = req.body;
+
+  pool.query('INSERT INTO FIELD (FieldID, FarmID, Location, FieldSize) VALUES ($1, $2, $3, $4)', [FieldID, FarmID, Location, FieldSize], (error, results) => {
+    if (error) {
+      res.status(500).json({ error });
+      // throw error;
+    }
+    res.status(201).send({ status: 'Field Added Successfully', result: results.row[0] });
+  });
+};
+
 // INSERT INTO test VALUES (B'10'::bit(3), B'101');
 
 /////////////////////////////////////////////////////////////////////////////
