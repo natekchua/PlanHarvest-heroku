@@ -115,9 +115,9 @@ const getFarmByID = (req, res) => {
 };
 
 const addFarm = (req, res) => {
-  const { FarmID, OfficeLocation } = req.body;
-
-  pool.query('INSERT INTO FARM (FarmID, OfficeLocation) VALUES ($1, $2)', [FarmID, OfficeLocation], (error, results) => {
+  //const { FarmID, OfficeLocation } = req.body;
+  const OfficeLocation = "jeremystestforreturning"
+  pool.query('INSERT INTO FARM (OfficeLocation) VALUES ($1) RETURNING FarmID', [OfficeLocation], (error, results) => {
     if (error) {
       res.status(500).json({ error });
       // throw error;
@@ -212,6 +212,7 @@ const getBins = (req, res) => {
 };
 
 const getBinByID = (req, res) => {
+  let BinID = parseInt(req.params.id);
 
   pool.query('SELECT * FROM BIN WHERE BinID = $1', [BinID], (error, results) => {
     if (error) {

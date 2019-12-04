@@ -41,7 +41,7 @@ farmRouter.get('/initfarms', fcnsDB.initFarms);
 farmRouter.get('/initfields', fcnsDB.initFields);
 farmRouter.get('/initbins', fcnsDB.initBins);
 
-farmRouter.get('/farms', fcnsDB.getFarms);
+farmRouter.get('/farms', fcnsDB.addFarm);
 farmRouter.get('/farms/:id', fcnsDB.getFarmByID);
 farmRouter.post('/farms', fcnsDB.addFarm, function(req, res) {});
 // app.put('/farms/:id', fcnsDB.editFarm);

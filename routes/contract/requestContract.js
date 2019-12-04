@@ -8,7 +8,7 @@ const requestContractWheat = (req, res) => {
       if (error) {
         console.log(error);
       }
-      res.status(200).json(results.rows);
+      res.status(200).json(results);
       res.end();
     });
 };
