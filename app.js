@@ -35,7 +35,7 @@ app.get('/', (request, response) => {
   console.log('Hi');
 });
 
-farmRouter.get('/test2', require('routes/contract/requestContract').requestContractWheat)
+farmRouter.get('/test2', require('./routes/contract/requestContract').requestContractWheat)
 farmRouter.get('/test', fcnsDB.test);
 farmRouter.get('/initfarms', fcnsDB.initFarms);
 farmRouter.get('/initfields', fcnsDB.initFields);
