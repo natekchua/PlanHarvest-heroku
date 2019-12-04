@@ -5,7 +5,8 @@ const app = express();
 var cors = require('cors');
 
 app.use(cors());
-const port = process.env.PORT || 5432;
+
+const port = process.env.PORT || 8080;
 
 // const connector = require('./local.js');
 // const connector = require('./connectDB.js');
@@ -53,6 +54,10 @@ app.post('/farms', fcnsDB.addFarm);
 // app.put('/farms/:id', fcnsDB.editFarm);
 // app.delete('/farms/:id', fcnsDB.deleteFarm);
 
+<<<<<<< HEAD
 
 app.get('/fields', fcnsDB.getFields);
 app.get('/bins', fcnsDB.getBins);
+=======
+module.exports = app;
+>>>>>>> 44afbfd4d626792f3343bc95506f7be1a636b6d3

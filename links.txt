@@ -1,0 +1,5 @@
+https://www.robinwieruch.de/postgresql-express-node-rest-api/
+https://pierregillesleymarie.com/blog/gladys/2017/04/30/building-rest-api-using-node-js.html
+https://flaviocopes.com/golang-tutorial-rest-api/
+https://codewithhugo.com/node-postgres-express-docker-compose/
+https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8/
