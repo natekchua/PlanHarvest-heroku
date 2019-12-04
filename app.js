@@ -5,6 +5,9 @@ const app = express();
 const farmRouter = express.Router();
 const cors = require('cors');
 
+const connector = require('./local.js');
+connector.initDB();
+
 app.use(cors());
 
 const port = process.env.PORT || 8080;
@@ -22,8 +25,8 @@ app.use(
   })
 );
 
-// app.listen(port, '10.13.189.72', () => {
-app.listen(port, '192.168.1.3', () => {
+app.listen(port, '10.13.160.98', () => {
+//app.listen(port, '192.168.1.3', () => {
   console.log(`Running on port ${port}`);
 });
 
@@ -32,6 +35,7 @@ app.get('/', (request, response) => {
   console.log('Hi');
 });
 
+farmRouter.get('/test2', require('routes/contract/requestContract').requestContractWheat)
 farmRouter.get('/test', fcnsDB.test);
 farmRouter.get('/initfarms', fcnsDB.initFarms);
 farmRouter.get('/initfields', fcnsDB.initFields);
