@@ -5,39 +5,16 @@ connector.initDB();
 const pool = connector.getPool();
 
 // test fcn now
-const test = (request, response) => {
+const test = (req, res) => {
   pool.query('SELECT NOW()', (error, results) => {
     if (error) {
       throw error;
     }
-    response.status(200).json(results.rows);
+    res.status(200).json(results.rows);
+    res.end();
   });
 };
 
-
-function createTables() {
-  pool.query("CREATE TABLE FARM(FarmID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
-    console.log(err, res);
-  });
-
-  /*
-  pool.query("CREATE TABLE customer(CustomerID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
-    console.log(err, res);
-  });
-
-  pool.query("CREATE TABLE product(ProductID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
-    console.log(err, res);
-  });
-
-  pool.query("CREATE TABLE FARM(FarmID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
-    console.log(err, res);
-  });
-
-  pool.query("CREATE TABLE FARM(FarmID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
-    console.log(err, res);
-  });
-  */
-}
 function initFarms() {
   let insertQuery = "INSERT INTO FARM(FarmID, OfficeLocation) VALUES($1, $2)";
   const values = [
@@ -51,15 +28,14 @@ function initFarms() {
     [135, 'Canmore, AB']
   ];
   for (let i = 0; i < values.length; i++ ) {
-    pool.query(insertQuery, values[i], (err, res) => {
+    pool.query(insertQuery, values[i], (err, results) => {
       if (err) {
         console.log(err.stack);
       } else {
-        console.log(res.rows[0]);
+        console.log(results.rows[0]);
       }
     });
   };
-  response.json({ info: 'There are now a bunch of farms' })
 };
 
 // not inserting isRentedAway
@@ -76,15 +52,14 @@ function initFields() {
     [8, 135, 'Coordinates', 100]
   ];
   for (let i = 0; i < values.length; i++ ) {
-    pool.query(insertQuery, values[i], (err, res) => {
+    pool.query(insertQuery, values[i], (err, results) => {
       if (err) {
         console.log(err.stack);
       } else {
-        console.log(res.rows[0]);
+        console.log(results.rows[0]);
       }
     });
   };
-  response.json({ info: 'There are now a bunch of farms' });
 };
 
 function initBins() {
@@ -100,15 +75,14 @@ function initBins() {
     [80, 6, 137, 'Coordinates']
   ];
   for (let i = 0; i < values.length; i++ ) {
-    pool.query(insertQuery, values[i], (err, res) => {
+    pool.query(insertQuery, values[i], (err, results) => {
       if (err) {
         console.log(err.stack);
       } else {
-        console.log(res.rows[0]);
+        console.log(results.rows[0]);
       }
     });
   };
-  response.json({ info: 'There are now a bunch of farms' });
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -116,58 +90,47 @@ function initBins() {
 // Farm Relation Functions
 //
 // should the request parameter be used?
-function newFarm(request) {
-  let insertQuery = "INSERT INTO FARM(FarmID, OfficeLocation) VALUES($1, $2)";
-  const values = [127, 'Devon, AB'];
-
-  pool.query(insertQuery, values, (err, res) => {
-    if (err) {
-      console.log(err.stack);
-    } else {
-      console.log(res.rows[0]);
-    }
-  });
-}
 
 // https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8/
-const getFarms = (request, response) => {
+const getFarms = (req, res) => {
   pool.query('SELECT * FROM FARM ORDER BY FarmID ASC', (error, results) => {
     if (error) {
       throw error;
     }
-    response.status(200).json(results.rows);
+    res.status(200).json(results.rows);
+    res.end();
   });
 };
 
-// https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8/
-const getFarmByID = (request, response) => {
-  const FarmID = parseInt(request.params.id);
+const getFarmByID = (req, res) => {
+  const FarmID = parseInt(req.params.id);
 
   pool.query('SELECT * FROM FARM WHERE FarmID = $1', [FarmID], (error, results) => {
     if (error) {
       throw error;
     };
-    response.status(200).json(results.rows);
+    res.status(200).json(results.rows);
+    res.end();
   });
 };
 
-// https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8/
-const addFarm = (request, response) => {
-  const { FarmID, OfficeLocation } = request.body;
+const addFarm = (req, res) => {
+  const { FarmID, OfficeLocation } = req.body;
 
-  pool.query('INSERT INTO FARM (FarmID, OfficeLocation) VALUES ($1, $2)', [FarmID, OfficeLocation], (error, results) => {
+  pool.query('INSERT INTO FARM (FarmID, OfficeLocation) VALUES ($1, $2)', [FarmID, OfficeLocation], (err, res) => {
     if (error) {
-      throw error;
+      res.status(500).json({ error });
+      // throw error;
     }
-    response.status(201).send(`User added with ID: ${results.insertId}`);
+    res.status(201).send({ status: 'Farm Added Successfully', result: results.row[0] });
+    res.end();
   });
 };
 
 /*
-// https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8/
-const editFarm = (request, response) => {
-  const id = parseInt(request.params.id);
-  const { name, email } = request.body;
+const editFarm = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { name, email } = req.body;
 
   pool.query(
     'UPDATE users SET name = $1, email = $2 WHERE id = $3',
@@ -176,19 +139,19 @@ const editFarm = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`User modified with ID: ${id}`);
+      res.status(200).send(`User modified with ID: ${id}`);
     }
   );
 };
 
-const deleteFarm = (request, response) => {
-  const id = parseInt(request.params.id);
+const deleteFarm = (req, res) => {
+  const id = parseInt(req.params.id);
 
   pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
     if (error) {
       throw error;
     }
-    response.status(200).send(`User deleted with ID: ${id}`);
+    res.status(200).send(`User deleted with ID: ${id}`);
   });
 };
 */
@@ -196,12 +159,40 @@ const deleteFarm = (request, response) => {
 //
 // Field Relation Functions
 //
-const getFields = (request, response) => {
+const getFields = (req, res) => {
   pool.query('SELECT * FROM FIELD ORDER BY FieldID ASC', (error, results) => {
     if (error) {
-      throw error;
+      res.status(400).json({ error });
+      // throw error;
     }
-    response.status(200).json(results.rows);
+    res.status(200).json(results.rows);
+    res.end();
+  });
+};
+
+const getFieldByID = (req, res) => {
+  const FielID = parseInt(req.params.id);
+
+  pool.query('SELECT * FROM FIELD WHERE FieldID = $1', [FieldID], (error, results) => {
+    if (error) {
+      // throw error;
+      console.error(error);
+      res.status(400).json({ error });
+    };
+    res.status(200).json(results.rows);
+    res.end();
+  });
+};
+
+const addField = (req, res) => {
+  const { FieldID, FarmID, Location, FieldSize } = req.body;
+
+  pool.query('INSERT INTO FIELD (FieldID, FarmID, Location, FieldSize) VALUES ($1, $2, $3, $4)', [FieldID, FarmID, Location, FieldSize], (error, results) => {
+    if (error) {
+      res.status(400).json({ error });
+      // throw error;
+    }
+    res.status(201).send({ status: 'Field Added Successfully', result: results.row[0] });
   });
 };
 
@@ -209,14 +200,68 @@ const getFields = (request, response) => {
 //
 // Bin Relation Functions
 //
-const getBins = (request, response) => {
+const getBins = (req, res) => {
   pool.query('SELECT * FROM BIN ORDER BY BinID ASC', (error, results) => {
     if (error) {
-      throw error;
+      res.status(400).json({ error });
+      // throw error;
     }
-    response.status(200).json(results.rows);
+    res.status(200).json(results.rows);
+    res.end();
   });
 };
+
+const getBinByID = (req, res) => {
+
+  pool.query('SELECT * FROM BIN WHERE BinID = $1', [BinID], (error, results) => {
+    if (error) {
+      // throw error;
+      console.error(error);
+      res.status(400).json({ error });
+    };
+    res.status(200).json(results.rows);
+    res.end();
+  });
+};
+
+/* another method of getting by id
+// https://medium.com/@jeffandersen/building-a-node-js-rest-api-with-express-46b0901f29b6
+function lookupBin(req, res, next) {
+let BinID = parseInt(req.params.id);
+pool.query('SELECT * FROM BIN WHERE BinID = $1', [BinID], (error, results) => {
+if (error) {
+// throw error;
+console.error(error);
+res.status(400).json({ error });
+}
+
+// no results
+if (results.rows.length === 0) {
+// We are able to set the HTTP status code on the res object
+res.statusCode = 404;
+return res.json({ errors: ['Bin not found'] });
+}
+res.status(200).json(results.rows);
+// req.json = results.rows[0];
+// res.end();
+next();
+});
+}
+*/
+
+const addBin = (req, res) => {
+  const { BinID, volumetricCapacity, FieldID, Location } = req.body;
+
+  pool.query('INSERT INTO BIN (BinID, volumetricCapacity, FieldID, Location) VALUES ($1, $2, $3, $4)', [BinID, volumetricCapacity, FieldID, Location], (error, results) => {
+    if (error) {
+      res.status(400).json({ error });
+      // throw error;
+    }
+    res.status(201).send({ status: 'Bin Added Successfully', result: results.row[0] });
+    res.end();
+  });
+};
+
 // INSERT INTO test VALUES (B'10'::bit(3), B'101');
 
 /////////////////////////////////////////////////////////////////////////////
@@ -263,15 +308,17 @@ console.log(err.stack)
 
 module.exports = {
   test,
-  newFarm,
   getFarms,
   getFarmByID,
   addFarm,
   // editFarm,
   // deleteFarm,
   getFields,
+  getFieldByID,
+  addField,
   getBins,
-  createTables,
+  getBinByID,
+  addBin,
   initFarms,
   initFields,
   initBins

@@ -2,14 +2,12 @@
 const express = require('express');
 
 const app = express();
-var cors = require('cors');
+const farmRouter = express.Router();
+const cors = require('cors');
 
 app.use(cors());
 
 const port = process.env.PORT || 8080;
-
-// const connector = require('./local.js');
-// const connector = require('./connectDB.js');
 
 const fcnsDB = require('./fcnsDB.js');
 
@@ -17,21 +15,12 @@ const fcnsDB = require('./fcnsDB.js');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
+// farmRouter.get('/bins/:id', fcnsDB.getBinByID);
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
-
-// fcnsDB.newFarm();
-
-// messy, but just run this once to create the farms table
-// fcnsDB.createTables();
-
-// connector.initDB();
-
-// should let or var be used instead for pool?
-// const pool = connector.getPool();
 
 // app.listen(port, '10.13.189.72', () => {
 app.listen(port, '192.168.1.3', () => {
@@ -43,21 +32,24 @@ app.get('/', (request, response) => {
   console.log('Hi');
 });
 
-app.get('/test', fcnsDB.test);
-app.get('/initfarms', fcnsDB.initFarms);
-app.get('/initfields', fcnsDB.initFields);
-app.get('/initbins', fcnsDB.initBins);
+farmRouter.get('/test', fcnsDB.test);
+farmRouter.get('/initfarms', fcnsDB.initFarms);
+farmRouter.get('/initfields', fcnsDB.initFields);
+farmRouter.get('/initbins', fcnsDB.initBins);
 
-app.get('/farms', fcnsDB.getFarms);
-app.get('/farms/:id', fcnsDB.getFarmByID);
-app.post('/farms', fcnsDB.addFarm);
+farmRouter.get('/farms', fcnsDB.getFarms);
+farmRouter.get('/farms/:id', fcnsDB.getFarmByID);
+farmRouter.post('/farms', fcnsDB.addFarm, function(req, res) {});
 // app.put('/farms/:id', fcnsDB.editFarm);
 // app.delete('/farms/:id', fcnsDB.deleteFarm);
 
-<<<<<<< HEAD
 
-app.get('/fields', fcnsDB.getFields);
-app.get('/bins', fcnsDB.getBins);
-=======
+farmRouter.get('/fields', fcnsDB.getFields);
+farmRouter.post('/fields', fcnsDB.addField);
+farmRouter.get('/bins', fcnsDB.getBins);
+farmRouter.get('/bins/:id', fcnsDB.getBinByID, function(req, res) {});
+// farmRouter.delete('/bins/:id', fcnsDB.getBinByID, function(req, res) {});
+farmRouter.post('/bins', fcnsDB.addBin);
+app.use('/api', farmRouter);
+
 module.exports = app;
->>>>>>> 44afbfd4d626792f3343bc95506f7be1a636b6d3
