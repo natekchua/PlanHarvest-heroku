@@ -1,5 +1,5 @@
-const connector = require('./local.js');
-// const connector = require('./connectDB.js');
+// const connector = require('./local.js');
+const connector = require('./connectDB.js');
 connector.initDB();
 
 const pool = connector.getPool();
@@ -117,7 +117,7 @@ const getFarmByID = (req, res) => {
 const addFarm = (req, res) => {
   const { FarmID, OfficeLocation } = req.body;
 
-  pool.query('INSERT INTO FARM (FarmID, OfficeLocation) VALUES ($1, $2)', [FarmID, OfficeLocation], (err, res) => {
+  pool.query('INSERT INTO FARM (FarmID, OfficeLocation) VALUES ($1, $2)', [FarmID, OfficeLocation], (error, results) => {
     if (error) {
       res.status(500).json({ error });
       // throw error;
@@ -189,7 +189,7 @@ const addField = (req, res) => {
 
   pool.query('INSERT INTO FIELD (FieldID, FarmID, Location, FieldSize) VALUES ($1, $2, $3, $4)', [FieldID, FarmID, Location, FieldSize], (error, results) => {
     if (error) {
-      res.status(400).json({ error });
+      res.status(500).json({ error });
       // throw error;
     }
     res.status(201).send({ status: 'Field Added Successfully', result: results.row[0] });
@@ -254,7 +254,7 @@ const addBin = (req, res) => {
 
   pool.query('INSERT INTO BIN (BinID, volumetricCapacity, FieldID, Location) VALUES ($1, $2, $3, $4)', [BinID, volumetricCapacity, FieldID, Location], (error, results) => {
     if (error) {
-      res.status(400).json({ error });
+      res.status(500).json({ error });
       // throw error;
     }
     res.status(201).send({ status: 'Bin Added Successfully', result: results.row[0] });
