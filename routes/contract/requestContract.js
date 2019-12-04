@@ -1,6 +1,6 @@
 //@CustomerID, @ContractID, @FarmID, @Startdate, @DeliverByDate, @FarmOrCustAct, @numLoadsWheat, @numLoadsBarley, @numLoadsCanola, @numLoadsBale
 
-const connector = require('./local.js');
+const connector = require('../../local.js');
 const pool = connector.getPool();
 
 const requestContractWheat = (req, res) => {

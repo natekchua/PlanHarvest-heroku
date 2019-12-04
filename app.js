@@ -5,7 +5,7 @@ const app = express();
 const farmRouter = express.Router();
 const cors = require('cors');
 
-const connector = require('./local');
+const connector = require('./local.js');
 connector.initDB();
 
 app.use(cors());
