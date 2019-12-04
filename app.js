@@ -2,6 +2,9 @@
 const express = require('express');
 
 const app = express();
+var cors = require('cors');
+
+app.use(cors());
 const port = process.env.PORT || 5432;
 
 // const connector = require('./local.js');
@@ -19,28 +22,37 @@ app.use(
   })
 );
 
-fcnsDB.newFarm();
+// fcnsDB.newFarm();
 
 // messy, but just run this once to create the farms table
-fcnsDB.createTables();
+// fcnsDB.createTables();
 
 // connector.initDB();
 
 // should let or var be used instead for pool?
 // const pool = connector.getPool();
 
-app.listen(port, () => {
+// app.listen(port, '10.13.189.72', () => {
+app.listen(port, '192.168.1.3', () => {
   console.log(`Running on port ${port}`);
 });
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' });
+  console.log('Hi');
 });
 
 app.get('/test', fcnsDB.test);
-app.get('/farms', fcnsDB.getFarms);
 app.get('/initfarms', fcnsDB.initFarms);
+app.get('/initfields', fcnsDB.initFields);
+app.get('/initbins', fcnsDB.initBins);
+
+app.get('/farms', fcnsDB.getFarms);
 app.get('/farms/:id', fcnsDB.getFarmByID);
 app.post('/farms', fcnsDB.addFarm);
 // app.put('/farms/:id', fcnsDB.editFarm);
 // app.delete('/farms/:id', fcnsDB.deleteFarm);
+
+
+app.get('/fields', fcnsDB.getFields);
+app.get('/bins', fcnsDB.getBins);

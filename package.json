@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/natekchua/PlanHarvest-heroku#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "nodemon": "^2.0.1",
     "pg": "^7.14.0",
@@ -37,14 +38,14 @@
     "lint": "^0.7.0"
   },
   "nodemonConfig": {
-	  "restartable": "rs",
-	  "ignore": [
-		"node_modules/**/node_modules"
-	  ],
-	  "delay": "2500",
-	  "env": {
-		  "NODE_ENV": "development",
-		  "PORT": 8080
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": 8080
     }
   }
 }
