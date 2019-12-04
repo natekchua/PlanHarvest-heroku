@@ -116,13 +116,16 @@ const getFarmByID = (req, res) => {
 
 const addFarm = (req, res) => {
   //const { FarmID, OfficeLocation } = req.body;
+  let id = 1
   const OfficeLocation = "jeremystestforreturning"
-  pool.query('INSERT INTO FARM (OfficeLocation) VALUES ($1) RETURNING FarmID', [OfficeLocation], (error, results) => {
+  pool.query('INSERT INTO FARM (FarmID, OfficeLocation) VALUES ($1, $2) RETURNING FarmID', [OfficeLocation], (error, results) => {
     if (error) {
       res.status(500).json({ error });
       // throw error;
     }
-    res.status(201).send({ status: 'Farm Added Successfully', result: results.row[0] });
+    console.log(results)
+
+    //res.status(201).send({ status: 'Farm Added Successfully', result: results.row[0] });
     res.end();
   });
 };
