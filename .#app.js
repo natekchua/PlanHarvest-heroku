@@ -1,1 +1,0 @@
-stamper@HP-Print-13-Print.11397:4

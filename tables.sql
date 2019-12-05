@@ -99,7 +99,7 @@ VolumetricCapacity real DEFAULT 10,
 VolumeFilled real DEFAULT 0,
 FieldID int NOT NULL,
 Location varchar(255) NOT NULL,
-ProductType varchar(255) NOT NULL,
+ProductType varchar(255),
 PRIMARY KEY (BinID),
 FOREIGN KEY (FieldID) REFERENCES Field (FieldID)
 );

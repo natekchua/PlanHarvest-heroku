@@ -15,9 +15,9 @@ const test = (req, res) => {
 };
 
 function initFarms() {
-  let insertQuery = "INSERT INTO FARM(OfficeLocation) VALUES($1)";
-  const values = ['Calgary, AB','Saskaberia, SK','Olds, AB','Okotoks, AB', 'MedicineHat, AB','Drayton Valley, AB'];
-  for (let i = 0; i < values.length; i++ ) {
+  let insertQuery = 'INSERT INTO FARM(OfficeLocation) VALUES($1)';
+  let values = [['Calgary, AB'], ['Saskaberia, SK'], ['Olds, AB'], ['Okotoks, AB'], ['MedicineHat, AB'], ['Drayton Valley, AB']];
+  for (let i = 0; i < values.length; i++) {
     pool.query(insertQuery, values[i], (err, results) => {
       if (err) {
         console.log(err.stack);
@@ -30,16 +30,16 @@ function initFarms() {
 
 // not inserting isRentedAway
 function initFields() {
-  let insertQuery = "INSERT INTO FIELD(FieldID, FarmID, Location, FieldSize) VALUES($1, $2, $3, $4)";
+  let insertQuery = "INSERT INTO FIELD(FarmID, Location, FieldSize) VALUES($1, $2, $3)";
   const values = [
-    [1, 128, 'Coordinates', 20],
-    [2, 128, 'Coordinates', 30 ],
-    [3, 128, 'Coordinates', 38],
-    [4, 128, 'Coordinates', 124],
-    [5, 128, 'Coordinates', 67],
-    [6, 128, 'Coordinates', 23],
-    [7, 128, 'Coordinates', -23],
-    [8, 135, 'Coordinates', 100]
+    [1, 'Coordinates', 20],
+    [1, 'Coordinates', 30 ],
+    [1, 'Coordinates', 38],
+    [1, 'Coordinates', 124],
+    [1, 'Coordinates', 67],
+    [1, 'Coordinates', 23],
+    [1, 'Coordinates', -23],
+    [1, 'Coordinates', 100]
   ];
   for (let i = 0; i < values.length; i++ ) {
     pool.query(insertQuery, values[i], (err, results) => {
@@ -53,16 +53,16 @@ function initFields() {
 };
 
 function initBins() {
-  let insertQuery = "INSERT INTO BIN(BinID, FieldID, volumetricCapacity, Location) VALUES($1, $2, $3, $4)";
+  let insertQuery = "INSERT INTO BIN(FieldID, volumetricCapacity, Location) VALUES($1, $2, $3)";
   const values = [
-    [10, 1, 244, 'Coordinates'],
-    [20, 1, 244, 'Coordinates'],
-    [30, 1, 20, 'Coordinates'],
-    [40, 2, 120, 'Coordinates'],
-    [50, 2, 488, 'Coordinates'],
-    [60, 8, 64, 'Coordinates'],
-    [70, 7, 32, 'Coordinates'],
-    [80, 6, 137, 'Coordinates']
+    [1, 244, 'Coordinates'],
+    [1, 244, 'Coordinates'],
+    [1, 20, 'Coordinates'],
+    [2, 120, 'Coordinates'],
+    [2, 488, 'Coordinates'],
+    [3, 64, 'Coordinates'],
+    [3, 32, 'Coordinates'],
+    [4, 137, 'Coordinates']
   ];
   for (let i = 0; i < values.length; i++ ) {
     pool.query(insertQuery, values[i], (err, results) => {
@@ -107,7 +107,7 @@ const getFarmByID = (req, res) => {
 const addFarm = (req, res) => {
   //const { FarmID, OfficeLocation } = req.body;
   // let id = 1;
-  const OfficeLocation = "jeremystestforreturning";
+  const OfficeLocation = 'Calgary, AB';
   pool.query('INSERT INTO FARM (OfficeLocation) VALUES ($1) RETURNING FarmID', [OfficeLocation], (error, results) => {
     if (error) {
       // res.status(500).json({ error });
