@@ -7,6 +7,35 @@ DateJoined varchar(255) NOT NULL,
 PRIMARY KEY (CustomerID)
 );
 
+CREATE TABLE AuthFarmer (
+Username varchar(12),
+ID int NOT NULL,
+Password varchar(20) NOT NULL,
+DateJoined DATE DEFAULT CURRENT_DATE,
+PRIMARY KEY (Username),
+FOREIGN KEY (ID) REFERENCES Farm (FarmID)
+);
+
+CREATE TABLE AuthCustomer(
+Username varchar(12),
+ID int NOT NULL,
+Password varchar(20) NOT NULL,
+DateJoined DATE DEFAULT CURRENT_DATE,
+PRIMARY KEY (Username),
+FOREIGN KEY (ID) REFERENCES Customer (CustomerID)
+);
+
+
+CREATE TABLE Customer (
+CustomerID SERIAL,
+FirstName varchar(255) NOT NULL,
+LastName varchar(255) NOT NULL,
+Location varchar(255) NOT NULL,
+DateJoined varchar(255) NOT NULL,
+PRIMARY KEY (CustomerID)
+);
+
+
 CREATE TABLE Farm (
 FarmID SERIAL,
 OfficeLocation varchar(255) NOT NULL,

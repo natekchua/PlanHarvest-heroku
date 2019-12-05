@@ -1,5 +1,4 @@
-// const connector = require('./local.js');
-const connector = require('./connectDB.js');
+const connector = require('./local.js');
 connector.initDB();
 
 const pool = connector.getPool();
@@ -8,7 +7,7 @@ const pool = connector.getPool();
 const test = (req, res) => {
   pool.query('SELECT NOW()', (error, results) => {
     if (error) {
-      throw error;
+      console.log(error);
     }
     res.status(200).json(results.rows);
     res.end();
@@ -16,17 +15,8 @@ const test = (req, res) => {
 };
 
 function initFarms() {
-  let insertQuery = "INSERT INTO FARM(FarmID, OfficeLocation) VALUES($1, $2)";
-  const values = [
-    [128, 'Calgary, AB'],
-    [129, 'Saskaberia, SK'],
-    [130, 'Olds, AB'],
-    [131, 'Okotoks, AB'],
-    [132, 'MedicineHat, AB'],
-    [133, 'Drayton Valley, AB'],
-    [134, 'Nordegg, AB'],
-    [135, 'Canmore, AB']
-  ];
+  let insertQuery = "INSERT INTO FARM(OfficeLocation) VALUES($1)";
+  const values = ['Calgary, AB','Saskaberia, SK','Olds, AB','Okotoks, AB', 'MedicineHat, AB','Drayton Valley, AB'];
   for (let i = 0; i < values.length; i++ ) {
     pool.query(insertQuery, values[i], (err, results) => {
       if (err) {
@@ -116,14 +106,14 @@ const getFarmByID = (req, res) => {
 
 const addFarm = (req, res) => {
   //const { FarmID, OfficeLocation } = req.body;
-  let id = 1
-  const OfficeLocation = "jeremystestforreturning"
-  pool.query('INSERT INTO FARM (FarmID, OfficeLocation) VALUES ($1, $2) RETURNING FarmID', [OfficeLocation], (error, results) => {
+  // let id = 1;
+  const OfficeLocation = "jeremystestforreturning";
+  pool.query('INSERT INTO FARM (OfficeLocation) VALUES ($1) RETURNING FarmID', [OfficeLocation], (error, results) => {
     if (error) {
-      res.status(500).json({ error });
-      // throw error;
+      // res.status(500).json({ error });
+      console.log(error);
     }
-    console.log(results)
+    console.log(results);
 
     //res.status(201).send({ status: 'Farm Added Successfully', result: results.row[0] });
     res.end();

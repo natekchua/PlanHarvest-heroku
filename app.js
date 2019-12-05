@@ -3,6 +3,8 @@ const express = require('express');
 
 const app = express();
 const farmRouter = express.Router();
+const contractRouter = express.Router();
+const authRouter = express.Router();
 const cors = require('cors');
 
 const connector = require('./local.js');
@@ -25,8 +27,9 @@ app.use(
   })
 );
 
-app.listen(port, '10.13.160.98', () => {
-//app.listen(port, '192.168.1.3', () => {
+app.listen(port, 'localhost', () => {
+  //app.listen(port, '10.13.160.98', () => {
+  //app.listen(port, '192.168.1.3', () => {
   console.log(`Running on port ${port}`);
 });
 
@@ -35,25 +38,28 @@ app.get('/', (request, response) => {
   console.log('Hi');
 });
 
-farmRouter.get('/test2', require('./routes/contract/requestContract').requestContractWheat)
-farmRouter.get('/test', fcnsDB.test);
+app.get('/test', fcnsDB.test);
 farmRouter.get('/initfarms', fcnsDB.initFarms);
 farmRouter.get('/initfields', fcnsDB.initFields);
 farmRouter.get('/initbins', fcnsDB.initBins);
 
-farmRouter.get('/farms', fcnsDB.addFarm);
+farmRouter.get('/farms', fcnsDB.getFarms);
+farmRouter.get('/farms/add', fcnsDB.addFarm); // temp fcn for testing
 farmRouter.get('/farms/:id', fcnsDB.getFarmByID);
 farmRouter.post('/farms', fcnsDB.addFarm, function(req, res) {});
 // app.put('/farms/:id', fcnsDB.editFarm);
 // app.delete('/farms/:id', fcnsDB.deleteFarm);
+app.use('/farmer', farmRouter);
 
-
-farmRouter.get('/fields', fcnsDB.getFields);
-farmRouter.post('/fields', fcnsDB.addField);
-farmRouter.get('/bins', fcnsDB.getBins);
-farmRouter.get('/bins/:id', fcnsDB.getBinByID, function(req, res) {});
+farmRouter.get('/assets/fields', fcnsDB.getFields);
+farmRouter.post('/assets/fields', fcnsDB.addField);
+farmRouter.get('/assets/bins', fcnsDB.getBins);
+farmRouter.get('/assets/bins/:id', fcnsDB.getBinByID, function(req, res) {});
 // farmRouter.delete('/bins/:id', fcnsDB.getBinByID, function(req, res) {});
 farmRouter.post('/bins', fcnsDB.addBin);
-app.use('/api', farmRouter);
+
+// Contracts
+contractRouter.get('/test2', require('./routes/contract/requestContract').requestContractWheat);
+app.use('/contract', contractRouter);
 
 module.exports = app;
