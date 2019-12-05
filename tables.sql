@@ -2,8 +2,7 @@ CREATE TABLE Customer (
 CustomerID SERIAL,
 FirstName varchar(255) NOT NULL,
 LastName varchar(255) NOT NULL,
-Location varchar(255) NOT NULL,
-DateJoined varchar(255) NOT NULL,
+DateJoined DATE DEFAULT CURRENT_DATE,
 PRIMARY KEY (CustomerID)
 );
 
