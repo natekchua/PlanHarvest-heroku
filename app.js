@@ -27,9 +27,9 @@ app.use(
   })
 );
 
-app.listen(port, 'localhost', () => {
-  //app.listen(port, '10.13.160.98', () => {
-  //app.listen(port, '192.168.1.3', () => {
+// app.listen(port, 'localhost', () => {
+// app.listen(port, '192.168.1.3', () => {
+app.listen(port, '10.13.186.178', () => {
   console.log(`Running on port ${port}`);
 });
 
@@ -42,6 +42,13 @@ app.get('/test', fcnsDB.test);
 farmRouter.get('/initfarms', fcnsDB.initFarms);
 farmRouter.get('/initfields', fcnsDB.initFields);
 farmRouter.get('/initbins', fcnsDB.initBins);
+
+// authentication
+authRouter.post('/adduser/customer', require('./routes/authentication/addCustomer').addCustomer);
+
+authRouter.post('/adduser/farmer', require('./routes/authentication/addFarmer').addFarmer);
+
+app.use('/authentication', authRouter);
 
 // farm
 farmRouter.get('/farms', require('./routes/farmer/getFarms').getFarms);
