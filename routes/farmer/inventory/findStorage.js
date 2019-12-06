@@ -14,21 +14,21 @@ const myFarm = (req, res) => {
       console.log(error);
     }
     console.log(results.rows[0]);
-    numbers.numFields = results.rows[0].count;
+    numbers.numFields = results.rows[0];
 
     pool.query('select count(BinID) from bin as b, field as f where f.FarmID= $1 AND b.FieldID = f.FieldID', [farmid], (error, results) => {
       if (error) {
         console.log(error);
       }
       console.log(results.rows[0]);
-      numbers.numBins = results.rows[0].count;
+      numbers.numBins = results.rows[0];
 
       pool.query('select count(ShedID) from shed as s, field as f where f.FarmID= $1 AND s.FieldID = f.FieldID', [farmid], (error, results) => {
         if (error) {
           console.log(error);
         }
         console.log(results.rows[0]);
-        numbers.numSheds = results.rows[0].count;
+        numbers.numSheds= results.rows[0];
         res.status(200).json(numbers);
         res.end();
       });

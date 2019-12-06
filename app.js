@@ -43,18 +43,18 @@ farmRouter.get('/initfarms', fcnsDB.initFarms);
 farmRouter.get('/initfields', fcnsDB.initFields);
 farmRouter.get('/initbins', fcnsDB.initBins);
 
-// authentication
+// authentication ----------------------------------------------------
 authRouter.post('/addUser/customer', require('./routes/authentication/addCustomer').addCustomer);
+
+authRouter.post('/addUser/farmer', require('./routes/authentication/addFarmer').addFarmer);
 
 authRouter.get('/login/customer/:id/:password', require('./routes/authentication/loginCustomer').loginCustomer);
 
 authRouter.get('/login/farmer/:id/:password', require('./routes/authentication/loginFarmer').loginFarmer);
 
-authRouter.post('/addUser/farmer', require('./routes/authentication/addFarmer').addFarmer);
-
 app.use('/authentication', authRouter);
 
-// farm
+// farm --------------------------------------------------------------
 farmRouter.get('/farms', require('./routes/farmer/getFarms').getFarms);
 
 farmRouter.get('/farms/:id', require('./routes/farmer/getFarmByID').getFarmByID);
@@ -62,13 +62,21 @@ farmRouter.get('/farms/:id', require('./routes/farmer/getFarmByID').getFarmByID)
 // farmer dashboard
 farmRouter.get('/assets/myFarm/:id', require('./routes/farmer/assets/myFarm').myFarm);
 
-// app.put('/farms/:id', fcnsDB.editFarm);
-// app.delete('/farms/:id', fcnsDB.deleteFarm);
+// field summary
+farmRouter.get('/assets/fieldSummary/:id', require('./routes/farmer/assets/fieldSummary').fieldSummary);
 
-farmRouter.get('/assets/fields', fcnsDB.getFields);
-farmRouter.post('/assets/fields', fcnsDB.addField);
-farmRouter.get('/assets/bins', fcnsDB.getBins);
-farmRouter.get('/assets/bins/:id', fcnsDB.getBinByID);
+
+// Returns a list of all farmer-owned fieldIDs.
+farmRouter.get('/assets/fieldIDs/:id', require('./routes/farmer/assets/getFieldIDs').getFieldIDs);
+
+// Returns a list of all farmer-owned bins.
+farmRouter.get('/assets/binIDs/:id', require('./routes/farmer/assets/getBinIDs').getBinIDs);
+
+// Returns a list of all farmer-owned sheds.
+farmRouter.get('/assets/shedIDs/:id', require('./routes/farmer/assets/getShedIDs').getShedIDs);
+
+//farmRouter.get('/assets/bins', fcnsDB.getBins);
+//farmRouter.get('/assets/bins/:id', fcnsDB.getBinByID);
 // farmRouter.delete('/bins/:id', fcnsDB.getBinByID, function(req, res) {});
 farmRouter.post('/bins', fcnsDB.addBin);
 app.use('/farmer', farmRouter);

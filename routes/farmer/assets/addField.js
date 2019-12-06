@@ -1,9 +1,9 @@
 const connector = require('../../../local.js');
 const pool = connector.getPool();
 
-const addCustomer = (req, res) => {
+const addField= (req, res) => {
   let ID;
-  const { firstName, lastName, password } = req.body;
+  const { farmID, lastName, password } = req.body;
 
   pool.query('INSERT INTO customer (FirstName, LastName) VALUES($1, $2) RETURNING CustomerID', [firstName, lastName], (error, results) => {
     if (error) {
