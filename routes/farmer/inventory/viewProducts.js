@@ -1,4 +1,4 @@
-const connector = require('../../local.js');
+const connector = require('../../../local.js');
 const pool = connector.getPool();
 
 const viewProducts = (req, res) => {

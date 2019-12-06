@@ -1,7 +1,7 @@
 CREATE TABLE For_prod (
 ContractID int NOT NULL,
 ProductID int NOT NULL,
-FOREIGN KEY (ContractID) REFERENCES Contract (ContractID),
+FOREIGN KEY (ContractID) REFERENCES Contract (ContractID) ON DELETE CASCADE,
 FOREIGN KEY (ProductID) REFERENCES Product (ProductID)
 );
 

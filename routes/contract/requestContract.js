@@ -3,87 +3,30 @@
 const connector = require('../../local.js');
 const pool = connector.getPool();
 
-const requestContractWheat = (req, res) => {
-    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
-    // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Wheat as w WHERE not w.ProductID and w.Grade=Grade in For_prod ', (error, results) => {
-      if (error) {
-        console.log(error);
-      }
-      if (results.rows.count < numLoads) {
-          
-      } else { //Query creates contract and returns ContractID
-          pool.query('INSERT INTO Contract \
-          (customerID, farmID, grade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
-              let contractID = results.rows[0].contractid;
-
-              pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
-                SELECT TOP $1 w.ProductID, $2\
-                FROM Wheat as w \
-                WHERE not w.ProductID  in For_prod;) \
-                \
-                ', [numLoads, contractID], (error, results) => {
-
-              })
-          });
-
-      }
-      res.status(200).json(results);
-      res.end();
-    });
-};
-
-const requestContractBarley = (req, res) => {
-    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
-    // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid)',[grade], (error, results) => {
-        if (error) {
-            console.log(error);
-        }
-        if (results.rows.count < numLoads) {
-
-        } else { //Query creates contract and returns ContractID
-            pool.query('INSERT INTO Contract \
-          (customerID, farmID, grade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
-                let contractID = results.rows[0].contractid;
-
-                pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
-                SELECT TOP $1 c.ProductID, $2\
-                FROM Barley as b \
-                WHERE not b.ProductID  in For_prod;) \
-                \
-                ', [numLoads, contractID], (error, results) => {
-
-                })
-            });
-        }
-        res.status(200).json(results);
-        res.end();
-    });
-};
-
-const requestContractCanola = (req, res) => {
+const requestContract = (req, res) => {
   const {customerID, farmID, grade, type, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.grade=$1 and c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid)', [grade], (error, results) => {
+  pool.query('SELECT COUNT(*) FROM Product as p, Canola as c WHERE p.grade=$1 and p.productid=c.productid and p.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = p.ProductID group by fp.productid)', [grade], (error, results) => {
         if (error) {
             console.log(error);
         }
-        if (results.rows.count < numLoads) {
+      console.log(results.rows[0].count);
+    console.log(grade);
+        if (results.rows[0].count < numLoads) {
 
         } else { //Query creates contract and returns ContractID
             pool.query('INSERT INTO Contract \
           (customerID, farmID, productgrade, deliverByDate, numOfLoads, productType) \
           VALUES($1, $2, $3, $4, $5, $6) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads, type], (error, results) => {
-                let contractID = results.rows[0].ContractID;
+                let contractID = results.rows[0].contractid;
 
+            console.log(contractID);
+            console.log(numLoads);
                 pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
-                SELECT c.ProductID, $2\
+                SELECT $1, c.ProductID \
                 FROM Canola as c \
-                WHERE c.ProductID not in (select productid from For_prod) limit $1', [numLoads, contractID], (error, results) => {
-                })
+                WHERE c.ProductID not in (select productid from For_prod) limit $2', [contractID, numLoads], (error, results) => {
+                });
             });
         }
         res.status(200).json(results);
@@ -91,71 +34,4 @@ const requestContractCanola = (req, res) => {
     });
 };
 
-const requestContractHay = (req, res) => {
-    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
-    // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid)',[grade], (error, results) => {
-        if (error) {
-            console.log(error);
-        }
-        if (results.rows.count < numLoads) {
-
-        } else { //Query creates contract and returns ContractID
-            pool.query('INSERT INTO Contract \
-          (customerID, farmID, grade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
-                let contractID = results.rows[0].contractid;
-
-                pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
-                SELECT TOP $1 h.ProductID, $2\
-                FROM Hay as h \
-                WHERE not h.ProductID  in For_prod;) \
-                \
-                ', [numLoads, contractID], (error, results) => {
-
-                })
-            });
-
-        }
-
-
-        res.status(200).json(results);
-        res.end();
-    });
-};
-
-const requestContractStraw = (req, res) => {
-    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
-    // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid);',[grade], (error, results) => {
-        if (error) {
-            console.log(error);
-        }
-        if (results.rows.count < numLoads) {
-
-        } else { //Query creates contract and returns ContractID
-            pool.query('INSERT INTO Contract \
-          (customerID, farmID, grade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
-                let contractID = results.rows[0].contractid;
-
-                pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
-                SELECT TOP $1 s.ProductID, $2\
-                FROM Straw as s \
-                WHERE not s.ProductID  in For_prod;) \
-                \
-                ', [numLoads, contractID], (error, results) => {
-
-                })
-            });
-
-        }
-
-
-        res.status(200).json(results);
-        res.end();
-    });
-};
-
-
-module.exports = {requestContractWheat, requestContractBarley, requestContractCanola, requestContractHay, requestContractStraw};
+module.exports = { requestContract };
