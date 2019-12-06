@@ -8,7 +8,7 @@ const viewContractsContractorSide = (req, res) => {
         if (error) {
             console.log(error);
         }
-        // console.log(results.rows[0]);
+        console.log(results.rows);
         res.status(200).json(results.rows);
         res.end();
     });

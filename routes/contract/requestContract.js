@@ -29,8 +29,6 @@ const requestContractWheat = (req, res) => {
           });
 
       }
-
-
       res.status(200).json(results);
       res.end();
     });
@@ -39,7 +37,7 @@ const requestContractWheat = (req, res) => {
 const requestContractBarley = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Barley as b WHERE not b.ProductID and b.Grade=$1 in For_prod',[grade], (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid)',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -60,10 +58,7 @@ const requestContractBarley = (req, res) => {
 
                 })
             });
-
         }
-
-
         res.status(200).json(results);
         res.end();
     });
@@ -72,7 +67,7 @@ const requestContractBarley = (req, res) => {
 const requestContractCanola = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Product as c WHERE not c.ProductID in (SELECT ProductID FROM For_prod) and c.Grade=$1 and c.ProductID in (SELECT ProductID FROM Canola) GROUP BY c.ProductID',[grade], (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid)',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -93,10 +88,7 @@ const requestContractCanola = (req, res) => {
 
                 })
             });
-
         }
-
-
         res.status(200).json(results);
         res.end();
     });
@@ -105,7 +97,7 @@ const requestContractCanola = (req, res) => {
 const requestContractHay = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Hay as h WHERE not h.ProductID and h.Grade=$1 in For_prod',[grade], (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid)',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -138,7 +130,7 @@ const requestContractHay = (req, res) => {
 const requestContractStraw = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Straw as s WHERE not s.ProductID and s.Grade=$1 in For_prod ',[grade], (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid);',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
