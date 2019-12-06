@@ -2,10 +2,32 @@ CREATE TABLE Customer (
 CustomerID SERIAL,
 FirstName varchar(255) NOT NULL,
 LastName varchar(255) NOT NULL,
+DateJoined DATE DEFAULT CURRENT_DATE,
+PRIMARY KEY (CustomerID)
+);
+
+CREATE TABLE AuthFarmer (
+ID int NOT NULL,
+Password varchar(20) NOT NULL,
+FOREIGN KEY (ID) REFERENCES Farm (FarmID)
+);
+
+CREATE TABLE AuthCustomer(
+ID int NOT NULL,
+Password varchar(20) NOT NULL,
+FOREIGN KEY (ID) REFERENCES Customer (CustomerID)
+);
+
+
+CREATE TABLE Customer (
+CustomerID SERIAL,
+FirstName varchar(255) NOT NULL,
+LastName varchar(255) NOT NULL,
 Location varchar(255) NOT NULL,
 DateJoined varchar(255) NOT NULL,
 PRIMARY KEY (CustomerID)
 );
+
 
 CREATE TABLE Farm (
 FarmID SERIAL,
@@ -18,17 +40,19 @@ CREATE TABLE Field (
 FieldID SERIAL,
 FarmID int NOT NULL,
 Location varchar(255) NOT NULL,
-FieldSize real NOT NULL,
+FieldSize real DEFAULT 20,
 IsRentedAway BIT DEFAULT '0'::"bit",
 PRIMARY KEY (FieldID),
 FOREIGN KEY (FarmID) REFERENCES Farm (FarmID)
 );
 
-CREATE TABLE Contracts (
+CREATE TABLE Contract (
 ContractID SERIAL,
 CustomerID int NOT NULL,
 FarmID int NOT NULL,
 numOfLoads int DEFAULT 1,
+productType varchar(12),
+prodectGrade int,
 StartDate  DATE DEFAULT CURRENT_DATE,
 DeliverByDate DATE NOT NULL,
 Delivered BIT DEFAULT '0'::"bit",
@@ -59,7 +83,7 @@ ShedID SERIAL,
 NumRows int DEFAULT 2,
 StacksPerRow int DEFAULT 10, 
 FieldID int NOT NULL,
-Location varchar(255) NOT NULL,
+Location varchar(255),
 PRIMARY KEY (ShedID),
 FOREIGN KEY (FieldID) REFERENCES Field (FieldID)
 );
@@ -70,7 +94,7 @@ VolumetricCapacity real DEFAULT 10,
 VolumeFilled real DEFAULT 0,
 FieldID int NOT NULL,
 Location varchar(255) NOT NULL,
-ProductType varchar(255) NOT NULL,
+ProductType varchar(255),
 PRIMARY KEY (BinID),
 FOREIGN KEY (FieldID) REFERENCES Field (FieldID)
 );
