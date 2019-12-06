@@ -39,7 +39,7 @@ const requestContractWheat = (req, res) => {
 const requestContractBarley = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Barley as b WHERE not b.ProductID and b.Grade=Grade in For_prod ', (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Barley as b WHERE not b.ProductID and b.Grade=$1 in For_prod',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -72,7 +72,7 @@ const requestContractBarley = (req, res) => {
 const requestContractCanola = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Canola as c WHERE not c.ProductID and c.Grade=Grade in For_prod ', (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Canola as c WHERE not c.ProductID and c.Grade=$1 in For_prod',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -105,7 +105,7 @@ const requestContractCanola = (req, res) => {
 const requestContractHay = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Hay as h WHERE not h.ProductID and h.Grade=Grade in For_prod ', (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Hay as h WHERE not h.ProductID and h.Grade=$1 in For_prod',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -138,7 +138,7 @@ const requestContractHay = (req, res) => {
 const requestContractStraw = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Straw as s WHERE not s.ProductID and s.Grade=Grade in For_prod ', (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Straw as s WHERE not s.ProductID and s.Grade=$1 in For_prod ',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
