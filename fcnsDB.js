@@ -144,31 +144,6 @@ const getBinByID = (req, res) => {
   });
 };
 
-/* another method of getting by id
-// https://medium.com/@jeffandersen/building-a-node-js-rest-api-with-express-46b0901f29b6
-function lookupBin(req, res, next) {
-let BinID = parseInt(req.params.id);
-pool.query('SELECT * FROM BIN WHERE BinID = $1', [BinID], (error, results) => {
-if (error) {
-// throw error;
-console.error(error);
-res.status(400).json({ error });
-}
-
-// no results
-if (results.rows.length === 0) {
-// We are able to set the HTTP status code on the res object
-res.statusCode = 404;
-return res.json({ errors: ['Bin not found'] });
-}
-res.status(200).json(results.rows);
-// req.json = results.rows[0];
-// res.end();
-next();
-});
-}
-*/
-
 const addBin = (req, res) => {
   const { BinID, volumetricCapacity, FieldID, Location } = req.body;
 
@@ -193,50 +168,6 @@ const addBarley = (req, res) => {
     res.status(201).send({ status: 'Field Added Successfully', result: results.row[0] });
   });
 };
-
-// INSERT INTO test VALUES (B'10'::bit(3), B'101');
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Customer Relation Functions
-//
-
-//
-//
-//
-
-/*
-// test pool fcns
-  pool.query("CREATE TABLE FARM(FarmID SERIAL PRIMARY KEY, OfficeLocation VARCHAR(60) NOT NULL, DateFounded DATE)", (err, res) => {
-  console.log(err, res);
-  // pool.end();
-  });
-
-let insertQuery = "INSERT INTO FARM(FarmID, OfficeLocation) VALUES($1, $2)";
-const values = [125, 'Edmonton, AB'];
-
-// callback
-pool.query(insertQuery, values);
-
-// async/await
-try {
-const res = await pool.query(text, values)
-console.log(res.rows[0])
-// { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
-} catch (err) {
-console.log(err.stack)
-}
-
-  pool.query("INSERT INTO FARM(FarmID, OfficeLocation) VALUES(124, 'Leduc, AB')", (err, res) => {
-  console.log(err, res);
-  pool.end();
-  });
-*/
-
-/*
-  pool.end();
-  console.log('pool has drained')
-*/
 
 module.exports = {
   test,
