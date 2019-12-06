@@ -97,15 +97,13 @@ farmRouter.get('/inventory/view/:id', require('./routes/farmer/inventory/viewPro
 farmRouter.get('/assets/displayBin', require('./routes/farmer/assets/displayBin').displayBin);
 
 // Contracts
-contractRouter.post('/request/wheat', require('./routes/contract/requestContract').requestContract);
+contractRouter.post('/request/wheat', require('./routes/contract/requestContract').requestContractWheat);
 
-contractRouter.post('/request/barley', require('./routes/contract/requestContract').requestContract);
+contractRouter.post('/request/barley', require('./routes/contract/requestContract').requestContractBarley);
 
-contractRouter.post('/request/canola', require('./routes/contract/requestContract').requestContract);
+contractRouter.post('/request/canola', require('./routes/contract/requestContract').requestContractCanola);
 
-contractRouter.post('/request/hay', require('./routes/contract/requestContract').requestContract);
-
-contractRouter.post('/request/straw', require('./routes/contract/requestContract').requestContract);
+contractRouter.post('/request/bale', require('./routes/contract/requestContract').requestContractBale);
 
 // delete contract
 contractRouter.get('/delete/:id', require('./routes/contract/deleteContract').deleteContract);
