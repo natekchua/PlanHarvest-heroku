@@ -24,7 +24,7 @@ CustomerID SERIAL,
 FirstName varchar(255) NOT NULL,
 LastName varchar(255) NOT NULL,
 Location varchar(255) NOT NULL,
-DateJoined varchar(255) NOT NULL,
+DateJoined DATE DEFAULT CURRENT_DATE,
 PRIMARY KEY (CustomerID)
 );
 
@@ -32,7 +32,7 @@ PRIMARY KEY (CustomerID)
 CREATE TABLE Farm (
 FarmID SERIAL,
 OfficeLocation varchar(255) NOT NULL,
-DateFounded DATE,
+DateFounded DATE DEFAULT CURRENT_DATE,
 PRIMARY KEY (FarmID)
 );
 
@@ -41,9 +41,9 @@ FieldID SERIAL,
 FarmID int NOT NULL,
 Location varchar(255) NOT NULL,
 FieldSize real DEFAULT 20,
-IsRentedAway BIT DEFAULT '0'::"bit",
+IsRentedAway boolean DEFAULT false,
 PRIMARY KEY (FieldID),
-FOREIGN KEY (FarmID) REFERENCES Farm (FarmID)
+FOREIGN KEY (FarmID) REFERENCES Farm (FarmID) ON DELETE CASCADE
 );
 
 CREATE TABLE Contract (
@@ -55,11 +55,11 @@ productType varchar(12),
 productGrade int,
 StartDate  DATE DEFAULT CURRENT_DATE,
 DeliverByDate DATE NOT NULL,
-Delivered BIT DEFAULT '0'::"bit",
+Delivered boolean DEFAULT false,
 Rejected BIT DEFAULT '0'::"bit",
 PRIMARY KEY (ContractID),
-FOREIGN KEY (CustomerID) REFERENCES Customer (CustomerID),
-FOREIGN KEY (FarmID) REFERENCES Farm (FarmID)
+FOREIGN KEY (CustomerID) REFERENCES Customer (CustomerID) ON DELETE CASCADE,
+FOREIGN KEY (FarmID) REFERENCES Farm (FarmID) ON DELETE CASCADE
 );
 
 CREATE TABLE Product (
@@ -81,7 +81,7 @@ FOREIGN KEY (ProductID) REFERENCES Product (ProductID)
 CREATE TABLE Shed (
 ShedID SERIAL,
 NumRows int DEFAULT 2,
-StacksPerRow int DEFAULT 10, 
+StacksPerRow int DEFAULT 10,
 FieldID int NOT NULL,
 Location varchar(255),
 PRIMARY KEY (ShedID),
@@ -89,12 +89,13 @@ FOREIGN KEY (FieldID) REFERENCES Field (FieldID)
 );
 
 CREATE TABLE Bin (
+DateJoined varchar(255) NOT NULL,
 BinID SERIAL,
 VolumetricCapacity real DEFAULT 10, 
 VolumeFilled real DEFAULT 0,
 FieldID int NOT NULL,
 Location varchar(255),
-ProductType varchar(255),
+ProductType varchar(255) DEFAULT NULL,
 PRIMARY KEY (BinID),
 FOREIGN KEY (FieldID) REFERENCES Field (FieldID)
 );
@@ -111,7 +112,7 @@ CREATE TABLE Grain (
 ProductID int NOT NULL,
 BinID int NOT NULL,
 FOREIGN KEY (ProductID) REFERENCES Product (ProductID) ON DELETE CASCADE,
-FOREIGN KEY (BinID) REFERENCES Bin (BinID)
+FOREIGN KEY (BinID) REFERENCES Bin (BinID) ON DELETE CASCADE
 );
 
 CREATE TABLE Wheat (
