@@ -91,15 +91,15 @@ farmRouter.post('/inventory/addProduct/bale', require('./routes/farmer/inventory
 farmRouter.get('/assets/displayBin', require('./routes/farmer/assets/displayBin').displayBin);
 
 // Contracts
-contractRouter.get('/contract/request/wheat', require('./routes/contract/requestContract').requestContractWheat);
+contractRouter.get('/request/wheat', require('./routes/contract/requestContract').requestContractWheat);
 
-contractRouter.get('/contract/request/barley', require('./routes/contract/requestContract').requestContractBarley);
+contractRouter.get('/request/barley', require('./routes/contract/requestContract').requestContractBarley);
 
-contractRouter.get('/contract/request/canola', require('./routes/contract/requestContract').requestContractCanola);
+contractRouter.get('/request/canola', require('./routes/contract/requestContract').requestContractCanola);
 
-contractRouter.get('/contract/request/hay', require('./routes/contract/requestContract').requestContractHay);
+contractRouter.get('/request/hay', require('./routes/contract/requestContract').requestContractHay);
 
-contractRouter.get('/contract/request/straw', require('./routes/contract/requestContract').requestContractStraw);
+contractRouter.get('/request/straw', require('./routes/contract/requestContract').requestContractStraw);
 
 
 app.use('/contract', contractRouter);
