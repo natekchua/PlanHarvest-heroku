@@ -87,6 +87,9 @@ farmRouter.post('/inventory/addProduct/grain', require('./routes/farmer/inventor
 // add bale
 farmRouter.post('/inventory/addProduct/bale', require('./routes/farmer/inventory/addBale').addBale);
 
+// delete product
+farmRouter.get('/inventory/deleteProduct/:id', require('./routes/farmer/inventory/deleteProduct').deleteProduct);
+
 // display bin content summary
 farmRouter.get('/assets/displayBin', require('./routes/farmer/assets/displayBin').displayBin);
 
