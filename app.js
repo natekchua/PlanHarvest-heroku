@@ -90,6 +90,9 @@ farmRouter.post('/inventory/addProduct/bale', require('./routes/farmer/inventory
 // delete product
 farmRouter.get('/inventory/deleteProduct/:id', require('./routes/farmer/inventory/deleteProduct').deleteProduct);
 
+// dispaly inventory
+farmRouter.get('/inventory/view/:id', require('./routes/farmer/inventory/viewProducts').viewProducts);
+
 // display bin content summary
 farmRouter.get('/assets/displayBin', require('./routes/farmer/assets/displayBin').displayBin);
 
@@ -110,6 +113,7 @@ contractRouter.get('/delete/:id', require('./routes/contract/deleteContract').de
 contractRouter.get('/getCustomer/:id', require('./routes/contract/viewContractsContractorSide').viewContractsContractorSide);
 
 contractRouter.get('/getFarmer/:id', require('./routes/contract/viewContractsFarmerSide').viewContractsFarmerSide);
+
 
 app.use('/contract', contractRouter);
 
