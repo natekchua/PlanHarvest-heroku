@@ -80,12 +80,9 @@ const requestContractCanola = (req, res) => {
                 let contractID = results.rows[0].ContractID;
 
                 pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
-                SELECT TOP $1 c.ProductID, $2\
+                SELECT c.ProductID, $2\
                 FROM Canola as c \
-                WHERE not c.ProductID  in For_prod;) \
-                \
-                ', [numLoads, contractID], (error, results) => {
-
+                WHERE c.ProductID not in (select productid from For_prod) limit $1', [numLoads, contractID], (error, results) => {
                 })
             });
         }

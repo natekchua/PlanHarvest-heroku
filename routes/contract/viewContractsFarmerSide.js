@@ -4,7 +4,7 @@ const pool = connector.getPool();
 const viewContractsFarmerSide = (req, res) => {
   const farmerid = parseInt(req.params.id);
 
-    pool.query('SELECT * FROM Contract as c WHERE c.FarmerID=$1 ORDER BY c.ContractID ASC', [farmerid], (error, results) => {
+    pool.query('SELECT * FROM Contract as c WHERE c.FarmID=$1 ORDER BY c.ContractID ASC', [farmerid], (error, results) => {
         if (error) {
             console.log(error);
         }
