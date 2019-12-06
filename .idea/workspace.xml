@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25ca80aa-c0b3-487b-826b-a627ed73a9d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/farmer/inventory/viewProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/farmer/inventory/viewProducts.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +33,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PlanHarvest Front End" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="ServiceViewManager">
@@ -65,6 +65,7 @@
       <workItem from="1575649426184" duration="2004000" />
       <workItem from="1575651596335" duration="7074000" />
       <workItem from="1575658901399" duration="9624000" />
+      <workItem from="1575669770040" duration="1405000" />
     </task>
     <servers />
   </component>
