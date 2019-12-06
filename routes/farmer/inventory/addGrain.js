@@ -9,6 +9,7 @@ const addGrain = (req, res) => {
   if ((grainType == 'wheat' || grainType == 'canola' || grainType == 'barley') && grade !== null) {
     pool.query('insert into product (Grade, FieldID) VALUES($1, $2) RETURNING productid', [grade, fieldID], (error, results) => {
       if (error) {
+        res.status(500);
         console.log(error);
       }
 
@@ -16,6 +17,7 @@ const addGrain = (req, res) => {
 
       pool.query('insert into grain (ProductID, BinID) VALUES($1, $2)', [ID, storageID], (error, results) => {
         if (error) {
+          res.status(500);
           console.log(error);
         }
 
@@ -70,8 +72,7 @@ function deleteProd(prodID) {
         throw error;
       }
     });
-  } catch (err) {
-  }
+  } catch (err) {}
 }
 
 module.exports = { addGrain };

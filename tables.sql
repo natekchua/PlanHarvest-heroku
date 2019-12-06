@@ -1,3 +1,10 @@
+CREATE TABLE For_prod (
+ContractID int NOT NULL,
+ProductID int NOT NULL,
+FOREIGN KEY (ContractID) REFERENCES Contract (ContractID),
+FOREIGN KEY (ProductID) REFERENCES Product (ProductID)
+);
+
 CREATE TABLE Customer (
 CustomerID SERIAL,
 FirstName varchar(255) NOT NULL,
@@ -17,17 +24,6 @@ ID int NOT NULL,
 Password varchar(20) NOT NULL,
 FOREIGN KEY (ID) REFERENCES Customer (CustomerID)
 );
-
-
-CREATE TABLE Customer (
-CustomerID SERIAL,
-FirstName varchar(255) NOT NULL,
-LastName varchar(255) NOT NULL,
-Location varchar(255) NOT NULL,
-DateJoined DATE DEFAULT CURRENT_DATE,
-PRIMARY KEY (CustomerID)
-);
-
 
 CREATE TABLE Farm (
 FarmID SERIAL,
@@ -69,13 +65,6 @@ DateStored DATE DEFAULT CURRENT_DATE,
 FieldID int,
 PRIMARY KEY (ProductID),
 FOREIGN KEY (FieldID) REFERENCES Field (FieldID) ON DELETE CASCADE
-);
-
-CREATE TABLE For_prod (
-ContractID int NOT NULL,
-ProductID int NOT NULL,
-FOREIGN KEY (ContractID) REFERENCES Contracts (ContractID),
-FOREIGN KEY (ProductID) REFERENCES Product (ProductID)
 );
 
 CREATE TABLE Shed (
