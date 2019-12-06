@@ -52,7 +52,7 @@ CustomerID int NOT NULL,
 FarmID int NOT NULL,
 numOfLoads int DEFAULT 1,
 productType varchar(12),
-prodectGrade int,
+productGrade int,
 StartDate  DATE DEFAULT CURRENT_DATE,
 DeliverByDate DATE NOT NULL,
 Delivered BIT DEFAULT '0'::"bit",
@@ -93,7 +93,7 @@ BinID SERIAL,
 VolumetricCapacity real DEFAULT 10, 
 VolumeFilled real DEFAULT 0,
 FieldID int NOT NULL,
-Location varchar(255) NOT NULL,
+Location varchar(255),
 ProductType varchar(255),
 PRIMARY KEY (BinID),
 FOREIGN KEY (FieldID) REFERENCES Field (FieldID)
@@ -117,14 +117,14 @@ FOREIGN KEY (BinID) REFERENCES Bin (BinID)
 CREATE TABLE Wheat (
 ProductID int NOT NULL,
 ProteinPercentage real DEFAULT 0,
-hasErgot BIT DEFAULT '0'::"bit",
+hasErgot BOOLEAN DEFAULT false,
 FOREIGN KEY (ProductID) REFERENCES Product (ProductID) ON DELETE CASCADE
 );
 
 CREATE TABLE Barley (
 ProductID int NOT NULL,
-isHulled BIT DEFAULT '0'::"bit",
-hasBlight BIT DEFAULT '0'::"bit",
+isHulled BOOLEAN DEFAULT false,
+hasBlight BOOLEAN DEFAULT false,
 FOREIGN KEY (ProductID) REFERENCES Product (ProductID) ON DELETE CASCADE
 );
 

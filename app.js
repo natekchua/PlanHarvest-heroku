@@ -81,6 +81,9 @@ farmRouter.get('/assets/shedIDs/:id', require('./routes/farmer/assets/getShedIDs
 farmRouter.post('/bins', fcnsDB.addBin);
 app.use('/farmer', farmRouter);
 
+// Inventory --------------------------------------------------------
+farmRouter.post('/inventory/addProduct/grain', require('./routes/farmer/inventory/addGrain').addGrain);
+
 // Contracts
 contractRouter.get('/test2', require('./routes/contract/requestContract').requestContractWheat);
 
