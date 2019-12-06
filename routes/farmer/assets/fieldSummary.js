@@ -10,7 +10,7 @@ const fieldSummary = (req, res) => {
     numSheds: 0
   };
 
-  pool.query('select f.FieldID, f.Location, COUNT(BinID) from field as f, bin as b where f.farmid = $1 AND b.fieldid=f.fieldid group by f.fieldid', [farmid], (errors, results) => {
+  pool.query('select f.FieldID, f.Location', [farmid], (errors, results) => {
     if (errors) {
       console.log(error);
     }

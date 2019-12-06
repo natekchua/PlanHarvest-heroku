@@ -63,4 +63,15 @@ const addGrain = (req, res) => {
   }
 };
 
+function deleteProd(prodID) {
+  try {
+    pool.query('delete from product where ProductID = $1', [productID], (error, results) => {
+      if (error) {
+        throw error;
+      }
+    });
+  } catch (err) {
+  }
+}
+
 module.exports = { addGrain };

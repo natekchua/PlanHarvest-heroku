@@ -54,7 +54,7 @@ numOfLoads int DEFAULT 1,
 productType varchar(12),
 productGrade int,
 StartDate  DATE DEFAULT CURRENT_DATE,
-DeliverByDate DATE NOT NULL,
+DeliverByDate DATE,
 Delivered boolean DEFAULT false,
 Rejected BIT DEFAULT '0'::"bit",
 PRIMARY KEY (ContractID),
@@ -89,7 +89,6 @@ FOREIGN KEY (FieldID) REFERENCES Field (FieldID)
 );
 
 CREATE TABLE Bin (
-DateJoined varchar(255) NOT NULL,
 BinID SERIAL,
 VolumetricCapacity real DEFAULT 10, 
 VolumeFilled real DEFAULT 0,

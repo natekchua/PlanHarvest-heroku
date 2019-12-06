@@ -104,9 +104,9 @@ contractRouter.post('/request/hay', require('./routes/contract/requestContract')
 
 contractRouter.post('/request/straw', require('./routes/contract/requestContract').requestContractStraw);
 
-contractRouter.get('/getCustomer', require('./routes/contract/viewContractsContractorSide').viewContractsContractorSide);
+contractRouter.get('/getCustomer/:id', require('./routes/contract/viewContractsContractorSide').viewContractsContractorSide);
 
-contractRouter.get('/getFarmer', require('./routes/contract/viewContractsFarmerSide').viewContractsFarmerSide);
+contractRouter.get('/getFarmer/:id', require('./routes/contract/viewContractsFarmerSide').viewContractsFarmerSide);
 
 app.use('/contract', contractRouter);
 
