@@ -4,7 +4,7 @@ const pool = connector.getPool();
 const viewProducts = (req, res) => {
     const productid = parseInt(req.params.id);
 
-    pool.query('SELECT * FROM Product as p WHERE p.ProductID=$1 ORDER BY p.ProductID ASC', [productid], (error, results) => {
+    pool.query('SELECT * FROM Product as p WHERE p.FarmID=$1 ORDER BY p.ProductID ASC', [productid], (error, results) => {
         if (error) {
             console.log(error);
         }
