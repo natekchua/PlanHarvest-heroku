@@ -72,7 +72,7 @@ const requestContractBarley = (req, res) => {
 const requestContractCanola = (req, res) => {
     const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Product as c WHERE not c.ProductID in (SELECT * FROM For_prod) and c.Grade=$1 GROUP BY c.ProductID',[grade], (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Product as c WHERE not c.ProductID in (SELECT ProductID FROM For_prod) and c.Grade=$1 and c.ProductID in (SELECT ProductID FROM Canola) GROUP BY c.ProductID',[grade], (error, results) => {
         if (error) {
             console.log(error);
         }
