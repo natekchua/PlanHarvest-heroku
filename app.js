@@ -44,9 +44,13 @@ farmRouter.get('/initfields', fcnsDB.initFields);
 farmRouter.get('/initbins', fcnsDB.initBins);
 
 // authentication
-authRouter.post('/adduser/customer', require('./routes/authentication/addCustomer').addCustomer);
+authRouter.post('/addUser/customer', require('./routes/authentication/addCustomer').addCustomer);
 
-authRouter.post('/adduser/farmer', require('./routes/authentication/addFarmer').addFarmer);
+authRouter.get('/login/customer/:id/:password', require('./routes/authentication/loginCustomer').loginCustomer);
+
+authRouter.get('/login/farmer/:id/:password', require('./routes/authentication/loginFarmer').loginFarmer);
+
+authRouter.post('/addUser/farmer', require('./routes/authentication/addFarmer').addFarmer);
 
 app.use('/authentication', authRouter);
 
@@ -55,8 +59,9 @@ farmRouter.get('/farms', require('./routes/farmer/getFarms').getFarms);
 
 farmRouter.get('/farms/:id', require('./routes/farmer/getFarmByID').getFarmByID);
 
-farmRouter.get('/farms/add', fcnsDB.addFarm); // temp fcn for testing
-farmRouter.post('/farms', fcnsDB.addFarm);
+// farmer dashboard
+farmRouter.get('/assets/myFarm/:id', require('./routes/farmer/assets/myFarm').myFarm);
+
 // app.put('/farms/:id', fcnsDB.editFarm);
 // app.delete('/farms/:id', fcnsDB.deleteFarm);
 

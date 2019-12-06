@@ -25,8 +25,8 @@ function initFarms() {
         console.log(results.rows[0]);
       }
     });
-  };
-};
+  }
+}
 
 // not inserting isRentedAway
 function initFields() {
@@ -49,8 +49,8 @@ function initFields() {
         console.log(results.rows[0]);
       }
     });
-  };
-};
+  }
+}
 
 function initBins() {
   let insertQuery = "INSERT INTO BIN(FieldID, volumetricCapacity, Location) VALUES($1, $2, $3)";
@@ -72,83 +72,9 @@ function initBins() {
         console.log(results.rows[0]);
       }
     });
-  };
-};
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Farm Relation Functions
-//
-// should the request parameter be used?
-
-// https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8/
-const getFarms = (req, res) => {
-  pool.query('SELECT * FROM FARM ORDER BY FarmID ASC', (error, results) => {
-    if (error) {
-      throw error;
-    }
-    res.status(200).json(results.rows);
-    res.end();
-  });
-};
-
-const getFarmByID = (req, res) => {
-  const FarmID = parseInt(req.params.id);
-
-  pool.query('SELECT * FROM FARM WHERE FarmID = $1', [FarmID], (error, results) => {
-    if (error) {
-      throw error;
-    };
-    res.status(200).json(results.rows);
-    res.end();
-  });
-};
-
-const addFarm = (req, res) => {
-  //const { FarmID, OfficeLocation } = req.body;
-  // let id = 1;
-  const OfficeLocation = 'Calgary, AB';
-  pool.query('INSERT INTO FARM (OfficeLocation) VALUES ($1) RETURNING FarmID', [OfficeLocation], (error, results) => {
-    if (error) {
-      // res.status(500).json({ error });
-      console.log(error);
-    }
-    console.log(results);
-
-    //res.status(201).send({ status: 'Farm Added Successfully', result: results.row[0] });
-    res.end();
-  });
-};
-
-/*
-const editFarm = (req, res) => {
-  const id = parseInt(req.params.id);
-  const { name, email } = req.body;
-
-  pool.query(
-    'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-    [name, email, id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      res.status(200).send(`User modified with ID: ${id}`);
-    }
-  );
-};
-
-const deleteFarm = (req, res) => {
-  const id = parseInt(req.params.id);
-
-  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error;
-    }
-    res.status(200).send(`User deleted with ID: ${id}`);
-  });
-};
-*/
-/////////////////////////////////////////////////////////////////////////////
+  }
+}
+//////////////////////////////////////////////////////////////////////////
 //
 // Field Relation Functions
 //
@@ -314,9 +240,6 @@ console.log(err.stack)
 
 module.exports = {
   test,
-  getFarms,
-  getFarmByID,
-  addFarm,
   // editFarm,
   // deleteFarm,
   getFields,
