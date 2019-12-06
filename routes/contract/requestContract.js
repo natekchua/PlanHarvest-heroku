@@ -65,9 +65,9 @@ const requestContractBarley = (req, res) => {
 };
 
 const requestContractCanola = (req, res) => {
-    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
+  const {customerID, farmID, grade, type, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
-    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid)',[grade], (error, results) => {
+    pool.query('SELECT COUNT(*) FROM Product as c WHERE c.grade=$1 and c.ProductID not in (select fp.ProductID from For_prod as fp where fp.ProductID = c.ProductID group by fp.productid)', [grade], (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -75,9 +75,9 @@ const requestContractCanola = (req, res) => {
 
         } else { //Query creates contract and returns ContractID
             pool.query('INSERT INTO Contract \
-          (customerID, farmID, grade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
-                let contractID = results.rows[0].contractid;
+          (customerID, farmID, productgrade, deliverByDate, numOfLoads, productType) \
+          VALUES($1, $2, $3, $4, $5, $6) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads, type], (error, results) => {
+                let contractID = results.rows[0].ContractID;
 
                 pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
                 SELECT TOP $1 c.ProductID, $2\
