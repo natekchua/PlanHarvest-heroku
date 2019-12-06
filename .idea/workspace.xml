@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25ca80aa-c0b3-487b-826b-a627ed73a9d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/routes/contract/requestContract.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/contract/requestContract.js" afterDir="false" />
-    </list>
+    <list default="true" id="25ca80aa-c0b3-487b-826b-a627ed73a9d9" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,7 +61,7 @@
       <workItem from="1575494827783" duration="1380000" />
       <workItem from="1575608048822" duration="7271000" />
       <workItem from="1575649426184" duration="2004000" />
-      <workItem from="1575651596335" duration="2929000" />
+      <workItem from="1575651596335" duration="3486000" />
     </task>
     <servers />
   </component>
