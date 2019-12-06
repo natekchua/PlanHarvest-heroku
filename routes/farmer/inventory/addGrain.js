@@ -28,7 +28,7 @@ const addGrain = (req, res) => {
           res.end();
         });
       } else if (grainType == 'canola') {
-        pool.query('insert into canola (ProductID, GreensPercentage) VALUES($1, $2)', [ID, percentage, hasBad], (error, results) => {
+        pool.query('insert into canola (ProductID, GreensPercentage) VALUES($1, $2)', [ID, percentage], (error, results) => {
           if (error) {
             console.log(error);
           }
@@ -39,7 +39,7 @@ const addGrain = (req, res) => {
         });
 
       } else if (grainType == 'barley') {
-        pool.query('insert into barley (ProductID, hasErgot, isHulled) VALUES($1, $2, $3)', [ID, hasBad, hasBad2], (error, results) => {
+        pool.query('insert into barley (ProductID, isHulled, hasBlight) VALUES($1, $2, $3)', [ID, hasBad, hasBad2], (error, results) => {
           if (error) {
             console.log(error);
           }
