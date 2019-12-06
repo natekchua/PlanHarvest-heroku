@@ -4,7 +4,7 @@ const pool = connector.getPool();
 const viewContractsFarmerSide = (req, res) => {
     const { farmerid } = req.body;
 
-    pool.query('SELECT * FROM Contract WHERE FarmerID=$1 ORDER BY FarmerID ASC', [farmerid], (error, results) => {
+    pool.query('SELECT * FROM Contract as c WHERE c.FarmerID=$1 ORDER BY c.FarmerID ASC', [farmerid], (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -14,4 +14,4 @@ const viewContractsFarmerSide = (req, res) => {
     });
 };
 
-module.exports = { viewContracts };
+module.exports = { viewContractsFarmerSide };

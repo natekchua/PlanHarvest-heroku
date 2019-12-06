@@ -4,7 +4,7 @@ const connector = require('../../local.js');
 const pool = connector.getPool();
 
 const requestContractWheat = (req, res) => {
-    const {CustomerID, FarmID, Grade, StartDate, DeliverByDate, numLoads} = req.body;
+    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
     pool.query('SELECT COUNT(*) FROM Wheat as w WHERE not w.ProductID and w.Grade=Grade in For_prod ', (error, results) => {
       if (error) {
@@ -14,8 +14,8 @@ const requestContractWheat = (req, res) => {
           
       } else { //Query creates contract and returns ContractID
           pool.query('INSERT INTO Contract \
-          (CustomerID, FarmID, ProductGrade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [CustomerID, FarmID, Grade, DeliverByDate, numLoads], (error, results) => {
+          (customerID, farmID, grade, deliverByDate, numOfLoads) \
+          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
               let contractID = results.rows[0].contractid;
 
               pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
@@ -37,7 +37,7 @@ const requestContractWheat = (req, res) => {
 };
 
 const requestContractBarley = (req, res) => {
-    const {CustomerID, FarmID, Grade, StartDate, DeliverByDate, numLoads} = req.body;
+    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
     pool.query('SELECT COUNT(*) FROM Barley as b WHERE not b.ProductID and b.Grade=Grade in For_prod ', (error, results) => {
         if (error) {
@@ -47,8 +47,8 @@ const requestContractBarley = (req, res) => {
 
         } else { //Query creates contract and returns ContractID
             pool.query('INSERT INTO Contract \
-          (CustomerID, FarmID, ProductGrade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [CustomerID, FarmID, Grade, DeliverByDate, numLoads], (error, results) => {
+          (customerID, farmID, grade, deliverByDate, numOfLoads) \
+          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
                 let contractID = results.rows[0].contractid;
 
                 pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
@@ -70,7 +70,7 @@ const requestContractBarley = (req, res) => {
 };
 
 const requestContractCanola = (req, res) => {
-    const {CustomerID, FarmID, Grade, StartDate, DeliverByDate, numLoads} = req.body;
+    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
     pool.query('SELECT COUNT(*) FROM Canola as c WHERE not c.ProductID and c.Grade=Grade in For_prod ', (error, results) => {
         if (error) {
@@ -80,8 +80,8 @@ const requestContractCanola = (req, res) => {
 
         } else { //Query creates contract and returns ContractID
             pool.query('INSERT INTO Contract \
-          (CustomerID, FarmID, ProductGrade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [CustomerID, FarmID, Grade, DeliverByDate, numLoads], (error, results) => {
+          (customerID, farmID, grade, deliverByDate, numOfLoads) \
+          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
                 let contractID = results.rows[0].contractid;
 
                 pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
@@ -103,7 +103,7 @@ const requestContractCanola = (req, res) => {
 };
 
 const requestContractHay = (req, res) => {
-    const {CustomerID, FarmID, Grade, StartDate, DeliverByDate, numLoads} = req.body;
+    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
     pool.query('SELECT COUNT(*) FROM Hay as h WHERE not h.ProductID and h.Grade=Grade in For_prod ', (error, results) => {
         if (error) {
@@ -113,8 +113,8 @@ const requestContractHay = (req, res) => {
 
         } else { //Query creates contract and returns ContractID
             pool.query('INSERT INTO Contract \
-          (CustomerID, FarmID, ProductGrade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [CustomerID, FarmID, Grade, DeliverByDate, numLoads], (error, results) => {
+          (customerID, farmID, grade, deliverByDate, numOfLoads) \
+          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
                 let contractID = results.rows[0].contractid;
 
                 pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
@@ -136,7 +136,7 @@ const requestContractHay = (req, res) => {
 };
 
 const requestContractStraw = (req, res) => {
-    const {CustomerID, FarmID, Grade, StartDate, DeliverByDate, numLoads} = req.body;
+    const {customerID, farmID, grade, deliverByDate, numLoads} = req.body;
     // Query gets the count of all available wheat products
     pool.query('SELECT COUNT(*) FROM Straw as s WHERE not s.ProductID and s.Grade=Grade in For_prod ', (error, results) => {
         if (error) {
@@ -146,8 +146,8 @@ const requestContractStraw = (req, res) => {
 
         } else { //Query creates contract and returns ContractID
             pool.query('INSERT INTO Contract \
-          (CustomerID, FarmID, ProductGrade, deliverByDate, numOfLoads) \
-          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [CustomerID, FarmID, Grade, DeliverByDate, numLoads], (error, results) => {
+          (customerID, farmID, grade, deliverByDate, numOfLoads) \
+          VALUES($1, $2, $3, $4, $5) RETURNING ContractID', [customerID, farmID, grade, deliverByDate, numLoads], (error, results) => {
                 let contractID = results.rows[0].contractid;
 
                 pool.query(' INSERT INTO For_prod(ContractID, ProductID) \
@@ -169,4 +169,4 @@ const requestContractStraw = (req, res) => {
 };
 
 
-module.exports = {requestContractWheat};
+module.exports = {requestContractWheat, requestContractBarley, requestContractCanola, requestContractHay, requestContractStraw};
